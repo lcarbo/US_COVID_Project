@@ -30,7 +30,7 @@ covid_state = pd.merge(state_info_df, covid_df, on = "abbreviation")
 covid_state.dropna()
 covid_state = covid_state[["state", "abbreviation", "area (sq. mi)", "date", "dataQualityGrade", "death", "hospitalized", "positive", "negative", "recovered", "totalTestResults"]]
 
-for state in covid_state["state"]:
+# for state in covid_state["state"]:
     
     
 # nj_df = covid_state.loc[covid_state["abbreviation"] == "NJ"]
