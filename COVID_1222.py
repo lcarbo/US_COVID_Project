@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 #Import Dependencies 
 import numpy as np
 import pandas as pd
@@ -15,8 +9,7 @@ from census import Census
 
 state_abb = "Resources/state-abbrevs.csv"
 state_area = "Resources/state-areas.csv"
-
-
+state_abb_read = pd.read_csv(state_abb)
 state_abb_df = pd.DataFrame(state_abb_read)
 state_area_read = pd.read_csv(state_area)
 state_area_df = pd.DataFrame(state_area_read)
@@ -67,6 +60,30 @@ recent_df["Median Income"]=""
 recent_df["Population Density"]=""
 
 #pull census populations from API 
+census_key = 'e3bdb742454fec392bd8e25113654b613eae40f0'
+c = Census(census_key, year = 2019)
+
+census_data = c.acs5.get(("NAME", "B19013_001E", "B01003_001E", "B01002_001E",
+                          "B19301_001E"), {'for': 'state:*'})
+
+# Convert to DataFrame
+census_pd = pd.DataFrame(census_data)
+
+# Column Reordering
+census_pd = census_pd.rename(columns={"B01003_001E": "Population",
+                                      "B01002_001E": "Median Age",
+                                      "B19013_001E": "Median Household Income",
+                                      "B19301_001E": "Per Capita Income",
+                                      "NAME": "Name", "state": "State"})
+
+merge_df = pd.merge(recent_df, census_pd, left_on='state', right_on='Name', how='inner')
+date = merge_df["date"][0]
+
+final_df = merge_df.drop(columns=['state','dataQualityGrade','date'])
+final_df = final_df.set_index('Name')
+
+print(f'This data was collected on: {date}')
+
 
 
 
