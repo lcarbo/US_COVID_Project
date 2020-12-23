@@ -4,7 +4,7 @@
 # In[ ]:
 
 
-CDC_COVID_API = https://data.cdc.gov/resource/vbim-akqf.json 
+CDC_COVID_API = "https://data.cdc.gov/resource/vbim-akqf.json"
 
 
 # In[3]:
