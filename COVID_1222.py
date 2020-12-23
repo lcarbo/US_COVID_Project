@@ -56,8 +56,7 @@ recent_df =covid_state.drop(old_covid, inplace=False)
 recent_df
 
 #add columns for additional details we need 
-recent_df["Median Income"]=""
-recent_df["Population Density"]=""
+recent_df["Population Density"]="" 
 
 #pull census populations from API 
 census_key = 'e3bdb742454fec392bd8e25113654b613eae40f0'
@@ -79,12 +78,20 @@ census_pd = census_pd.rename(columns={"B01003_001E": "Population",
 merge_df = pd.merge(recent_df, census_pd, left_on='state', right_on='Name', how='inner')
 date = merge_df["date"][0]
 
-final_df = merge_df.drop(columns=['state','dataQualityGrade','date'])
+final_df = merge_df.drop(columns=['state','dataQualityGrade','date',"State"])
 final_df = final_df.set_index('Name')
 
 print(f'This data was collected on: {date}')
 
 
+final_df.columns = map(str.title,final_df.columns)
+final_df.head()
+
+final_df = final_df.rename(columns={"Totaltestresults":"Total Test Results"})
+final_df
+
+final_df["Population Density"] = final_df["Population"] / final_df["Area (Sq. Mi)"]
+final_df
 
 
 #add a column to the covid_state data frame that calculates population density 
