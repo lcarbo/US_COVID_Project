@@ -49,3 +49,29 @@ print(covid_state)
 #combine data about each state and COVID infections grouped by age 
 #include % of population, % of COVID infections 
 #create a summary table of US overall 
+
+# #creating a heatmap figure
+# #DANS CODE HERE
+# # Using the template add the hotel marks to the heatmap
+# info_box_template = """
+# <dl>
+# <dt>State Name</dt><dd>{State Name}</dd>
+# <dt>Median Income</dt><dd>{Median Income}</dd>
+# <dt>Population Density</dt><dd>{Population Density}</dd>
+# <dt>Total Cases</dt><dd>{Total Cases}</dd>
+# </dl>
+# """
+# # Store the DataFrame Row
+# corona_info = [info_box_template.format(**row) for index, row in census_pd.iterrows()]
+# #set the locations to use for the marker layer
+# locations = census_pd[["Latitude", "Longitude"]]
+# #make the marker layer
+# markers = gmaps.marker_layer(locations)
+# #make the info box layer
+# corona_markers = gmaps.symbol_layer(locations, info_box_content=corona_info)
+# #add both of the layers to the heat map
+# fig.add_layer(markers)
+# fig.add_layer(corona_markers)
+# #print out the map
+# fig
+
