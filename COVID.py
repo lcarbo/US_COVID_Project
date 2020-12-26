@@ -25,16 +25,35 @@ covid_df.rename(columns = {"state" : "abbreviation"}, inplace = True)
 
 covid_state = pd.merge(state_info_df, covid_df, on = "abbreviation")
 
-# covid_state.to_csv("COVID_State.csv", index = False)
 
-covid_state.dropna()
+covid_state.dropna(inplace = True)
 covid_state = covid_state[["state", "abbreviation", "area (sq. mi)", "date", "dataQualityGrade", "death", "hospitalized", "positive", "negative", "recovered", "totalTestResults"]]
-print(covid_state)
+# covid_state.to_csv("COVID_State.csv", index = False)
+# print(covid_state["positive"].dtypes)
+# print(covid_state)
 # for state in covid_state["state"]:
     
     
 # nj_df = covid_state.loc[covid_state["abbreviation"] == "NJ"]
 # print(nj_df)
+
+target_state = []
+for state in df["State"]:
+    target_state.append()
+for state in target_state:
+    target_url = ('https://maps.googleapis.com/maps/api/geocode/json?'
+    'address={0}&key={1}').format(state, gkey)
+    target_data = requests.get(target_url).json()
+    lat_data = target_data["results"][0]["geometry"]["location"]["lat"]
+    lng_data = target_data["results"][0]["geometry"]["location"]["lng"]
+    lat.append(lat_data)
+    lng.append(lng_data)
+df["Latitude"] = lat
+df["Longitude"] = lng
+
+
+
+
 
 #using dataframe of State Abbrevs and State Areas 
 #review and clean the covid data 

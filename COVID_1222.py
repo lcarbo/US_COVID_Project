@@ -79,22 +79,38 @@ merge_df = pd.merge(recent_df, census_pd, left_on='state', right_on='Name', how=
 date = merge_df["date"][0]
 
 final_df = merge_df.drop(columns=['state','dataQualityGrade','date',"State"])
+# Adding lat and lng
+gkey = "AIzaSyDFhKOzU1xQaVXwq47izCmtB79nH_Lw_PI"
+lat = []
+lng = []
+target_state = []
+for state in final_df["Name"]:
+    target_state.append(state)
+for state in target_state:
+    target_url = ('https://maps.googleapis.com/maps/api/geocode/json?'
+    'address={0}&key={1}').format(state, gkey)
+    target_data = requests.get(target_url).json()
+    lat_data = target_data["results"][0]["geometry"]["location"]["lat"]
+    lng_data = target_data["results"][0]["geometry"]["location"]["lng"]
+    lat.append(lat_data)
+    lng.append(lng_data)
+final_df["Latitude"] = lat
+final_df["Longitude"] = lng
+
 final_df = final_df.set_index('Name')
 
 print(f'This data was collected on: {date}')
 
 
 final_df.columns = map(str.title,final_df.columns)
-final_df.head()
 
 final_df = final_df.rename(columns={"Totaltestresults":"Total Test Results"})
-final_df
 
 final_df["Population Density"] = final_df["Population"] / final_df["Area (Sq. Mi)"]
-final_df
+print(final_df)
 
 
-#add a column to the covid_state data frame that calculates population density 
+
 
 
 
