@@ -80,7 +80,7 @@ date = merge_df["date"][0]
 
 final_df = merge_df.drop(columns=['state','dataQualityGrade','date',"State"])
 # Adding lat and lng
-gkey = "AIzaSyDFhKOzU1xQaVXwq47izCmtB79nH_Lw_PI"
+gkey = "xxx"
 lat = []
 lng = []
 target_state = []
