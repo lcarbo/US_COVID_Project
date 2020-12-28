@@ -110,6 +110,68 @@ final_df["Population Density"] = final_df["Population"] / final_df["Area (Sq. Mi
 print(final_df)
 
 
+final_df_outlier = final_df.drop(["District of Columbia"])
+final_df_outlier
+
+# Remove outlier (DC)
+final_df_outlier = final_df.drop(["District of Columbia"])
+final_df_outlier
+
+# Create a pie chart showing total number of positive cases by state
+final_df_outlier["Positive"].plot(kind="pie", figsize=(15,15), rotatelabels=True)
+plt.ylabel("")
+plt.show()
+
+# Find and print the correlation of Population Density to COVID Cases
+correlation = st.pearsonr(final_df_outlier["Population Density"],final_df_outlier["Positive"])
+print(f"The correlation between both factors is {round(correlation[0],2)}")
+
+# Show the linear regression model for the scatter plot data
+x_values = final_df_outlier["Population Density"]
+y_values = final_df_outlier["Positive"]
+(slope, intercept, rvalue, pvalue, stderr) = st.linregress(x_values, y_values)
+regress_values = x_values * slope + intercept
+plt.scatter(x_values,y_values)
+plt.plot(x_values,regress_values,"r-")
+plt.ylabel("COVID+ Cases")
+plt.xlabel("Population Density (by State)")
+plt.title("Correlation of Population Density to Incidence of COVID Cases")
+plt.show()
+
+# Find and print the correlation for Median Household Income to COVID Cases
+correlation = st.pearsonr(final_df_outlier["Median Household Income"],final_df_outlier["Positive"])
+print(f"The correlation between both factors is {round(correlation[0],2)}")
+
+# Show the linear regression model for the scatter plot data
+x_values = final_df_outlier["Median Household Income"]
+y_values = final_df_outlier["Positive"]
+(slope, intercept, rvalue, pvalue, stderr) = st.linregress(x_values, y_values)
+regress_values = x_values * slope + intercept
+plt.scatter(x_values,y_values)
+plt.plot(x_values,regress_values,"r-")
+plt.ylabel("COVID+ Cases")
+plt.xlabel("Median Household Income (by State in USD)")
+plt.title("Correlation of Median Household Income to Incidence of COVID Cases")
+plt.show()
+
+# Find and print the correlation for Median Age to COVID Cases
+correlation = st.pearsonr(final_df_outlier["Median Age"],final_df_outlier["Positive"])
+print(f"The correlation between both factors is {round(correlation[0],2)}")
+
+# Show the linear regression model for the scatter plot data
+x_values = final_df_outlier["Median Age"]
+y_values = final_df_outlier["Positive"]
+(slope, intercept, rvalue, pvalue, stderr) = st.linregress(x_values, y_values)
+regress_values = x_values * slope + intercept
+plt.scatter(x_values,y_values)
+plt.plot(x_values,regress_values,"r-")
+plt.ylabel("COVID+ Cases")
+plt.xlabel("Median Age (by State in Years)")
+plt.title("Correlation of Median Age to Incidence of COVID Cases")
+plt.show()
+
+
+
 
 
 
