@@ -109,11 +109,7 @@ final_df.columns = map(str.title,final_df.columns)
 final_df = final_df.rename(columns={"Totaltestresults":"Total Test Results"})
 
 final_df["Population Density"] = final_df["Population"] / final_df["Area (Sq. Mi)"]
-print(final_df)
-
-
-final_df_outlier = final_df.drop(["District of Columbia"])
-final_df_outlier
+final_df
 
 # Remove outlier (DC)
 final_df_outlier = final_df.drop(["District of Columbia"])
@@ -172,12 +168,6 @@ plt.xlabel("Median Age (by State in Years)")
 plt.title("Correlation of Median Age to Incidence of COVID Cases")
 plt.show()
 
-
-
-
-
-
-
 # covid_state.to_csv("COVID_State.csv", index = False)
 
 
@@ -201,5 +191,16 @@ corona_markers = gmaps.symbol_layer(locations, info_box_content=corona_info)
 fig = gmaps.figure()
 fig.add_layer(markers)
 fig.add_layer(corona_markers)
+
+#this is used to get the max intensity for the heat map
+# for state in final_df:
+#     print(final_df["Positive"]/final_df["Population"])
+#create the heat Layer
+per_capita_infection_rate = final_df["Positive"]/final_df["Population"].astype(float)
+heat_layer = gmaps.heatmap_layer(locations, weights=per_capita_infection_rate, 
+                                 dissipating=False, max_intensity=.118,
+                                 point_radius =3.5)
+
+fig.add_layer(heat_layer)
 #print out the map
 fig
