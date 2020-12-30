@@ -108,7 +108,18 @@ final_df.columns = map(str.title,final_df.columns)
 
 final_df = final_df.rename(columns={"Totaltestresults":"Total Test Results"})
 
-final_df["Population Density"] = final_df["Population"] / final_df["Area (Sq. Mi)"]
+final_df["Population Density"] = round((final_df["Population"] / final_df["Area (Sq. Mi)"]),2)
+
+#Rearranging and organizing the table
+final_df = final_df[["Abbreviation","Longitude", "Latitude", "Area (Sq. Mi)", "Population", "Population Density", "Median Age", "Median Household Income","Positive", "Negative", "Recovered", "Death", "Total Test Results"]]
+
+#Formatting median household income
+final_df["Median Household Income"] = final_df["Median Household Income"].map("${:,.2f}".format)
+
+# #Renaming the columns
+# final_df = final_df.rename(columns={ "Population Density" : "Pop. Density (people/sq mile)", "Positive" : "# COVID Poistive", "Negative" : "# COVID Negative",  "Recovered" : "# Recovered", "Hospitalized" : "# Hospitalized", "Deaths" : "# COVID Deaths"})
+
+#Display
 final_df
 
 # Remove outlier (DC)
