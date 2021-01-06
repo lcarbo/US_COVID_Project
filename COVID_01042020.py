@@ -6,6 +6,7 @@ import requests
 from census import Census
 from scipy import stats as st
 import gmaps
+from config import gkey, census_key
 
 #Creating the csv paths
 state_abb = "Resources/state-abbrevs.csv"
@@ -61,7 +62,6 @@ recent_df["Population Density"]=""
 recent_df
 
 #Pull Census Populations from the census API
-census_key = 'e3bdb742454fec392bd8e25113654b613eae40f0'
 c = Census(census_key, year = 2019)
 
 census_data = c.acs5.get(("NAME", "B19013_001E", "B01003_001E", "B01002_001E",
@@ -85,7 +85,6 @@ final_df = merge_df.drop(columns=['state','dataQualityGrade','date',"State", "Me
 
 
 # Adding lat and lng
-gkey = "AIzaSyD1fdGsLFk3QVCpXsYPnpsLxVYoZ_SkaB8"
 lat = []
 lng = []
 target_state = []
